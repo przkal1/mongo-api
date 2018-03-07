@@ -2,7 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/home');
-const TemperatureReading = mongoose.model('TemperatureReading', { temp1: Double, temp2: Double, temp3: Double, timeStamp: Date });
+const TemperatureReading = mongoose.model('TemperatureReading', { temp1: Number, temp2: Number, temp3: Number, timeStamp: Date });
 
 
 var bodyParser = require('body-parser')
