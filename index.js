@@ -1,8 +1,8 @@
 const express = require('express')
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/test');
-const TemperatureReading = mongoose.model('TemperatureReading', { temp1: String, temp2: String, temp3: String, timeStamp: Date });
+mongoose.connect('mongodb://localhost/home');
+const TemperatureReading = mongoose.model('TemperatureReading', { temp1: Integer, temp2: Integer, temp3: Integer, timeStamp: Date });
 
 
 var bodyParser = require('body-parser')
@@ -23,7 +23,7 @@ app.post('/', function (req, res) {
         temp3: req.body.temp3,
         timeStamp: date });
 
-    tempReading.save().then(() => console.log('Saved reading: '+ req.body + ', ' + date.toString()));
+    tempReading.save().then(() => console.log('Saved reading: ' + req.body.toString() + ', ' + date.toString()));
 
     res.send();
 })
