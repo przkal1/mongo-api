@@ -26,7 +26,7 @@ app.post('/', function (req, res) {
     tempReading.save().then(() => {
         console.log('Saved reading: ');
         console.log(tempReading.temp1 + ' ' + tempReading.temp2 + ' ' + tempReading.temp3);
-        console.log(tempReading.date.toString());
+        console.log(tempReading.timeStamp);
     });
 
     res.send();
