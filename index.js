@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({
 app.get('/', function (req, res) {
     TemperatureReading.findOne({ }, 'temp1 temp2 temp3 timeStamp', { sort: { 'timeStamp' : -1 } }, function (err, temperature) {
         var currentDate = new Date();
-        var lastUpdateDiff = currentdate - temperature.timeStamp;
+        var lastUpdateDiff = currentDate - temperature.timeStamp;
         temperature.timeDiff = lastUpdateDiff;
 
         res.send(temperature);
