@@ -13,7 +13,11 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-app.get('/', (req, res) => res.send('Works!'))
+app.get('/', function (req, res) {
+    TemperatureReading.find().limit(100).sort({ timeStamp: -1 }).exec(function(result){
+        res.send(result.toString());
+    });
+})
 
 app.post('/', function (req, res) {
     var date = new Date();
@@ -28,6 +32,6 @@ app.post('/', function (req, res) {
     });
 
     res.send();
-})
+})/
 
 app.listen(3000, () => console.log('Example app listening on port 3000!'))
