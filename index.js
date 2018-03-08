@@ -17,6 +17,10 @@ app.get('/', function (req, res) {
     TemperatureReading.find().limit(100).sort({ timeStamp: -1 }).exec(function(result){
         res.send(result.toString());
     });
+
+    TemperatureReading.findOne({ }, 'name occupation', function (err, temperature) {
+        res.send(temperature.toString());
+    });
 })
 
 app.post('/', function (req, res) {
