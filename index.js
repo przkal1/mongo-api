@@ -18,7 +18,7 @@ app.get('/', function (req, res) {
         res.send(result.toString());
     });
 
-    TemperatureReading.findOne({ }, 'name occupation', function (err, temperature) {
+    TemperatureReading.findOne({ }, 'temp1 temp2 temp3 timeStamp', function (err, temperature) {
         res.send(temperature.toString());
     });
 })
