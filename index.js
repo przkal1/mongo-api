@@ -14,11 +14,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.get('/', function (req, res) {
-    TemperatureReading.find().limit(100).sort({ timeStamp: -1 }).exec(function(result){
-        res.send(result.toString());
-    });
-
-    TemperatureReading.findOne({ }, 'temp1 temp2 temp3 timeStamp', function (err, temperature) {
+    TemperatureReading.findOne({ }, 'temp1 temp2 temp3 timeStamp', { sort: { 'timeStamp' : -1 } }, function (err, temperature) {
         res.send(temperature.toString());
     });
 })
