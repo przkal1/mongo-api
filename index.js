@@ -17,6 +17,9 @@ app.get('/', function (req, res) {
     TemperatureReading.findOne({ }, 'temp1 temp2 temp3 timeStamp', { sort: { 'timeStamp' : -1 } }, function (err, temperature) {
         var currentDate = new Date();
         var lastUpdateDiff = currentDate - temperature.timeStamp;
+
+        res.setHeader('Access-Control-Allow-Origin', '*');
+
         res.send({
             temp1: temperature.temp1,
             temp2: temperature.temp2,
