@@ -34,9 +34,9 @@ app.get('/historical', function (req, res) {
     TemperatureReading.find({ }, 'temp1 temp2 temp3 timeStamp', { sort: { 'timeStamp' : -1 }, limit: 10080 }, function (err, temperatures) {
 
         var result = [];
-
+        console.log(temperatures.count);
         for(var i = 0; i < temperatures.count; ++i){
-            console.log(temperatures[i]);
+
             if(i % 10 === 0) {
                 console.log(temperatures[i]);
                 result.push({
