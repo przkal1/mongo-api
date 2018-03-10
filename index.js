@@ -36,6 +36,7 @@ app.get('/historical', function (req, res) {
         var result = [];
 
         for(var i = 0; i < temperatures.count; ++i){
+            console.log(temperatures[i]);
             if(i % 10 === 0) {
                 console.log(temperatures[i]);
                 result.push({
