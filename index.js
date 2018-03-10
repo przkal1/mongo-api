@@ -30,6 +30,13 @@ app.get('/', function (req, res) {
     });
 })
 
+app.get('/historical', function (req, res) {
+    TemperatureReading.find({ }, 'temp1 temp2 temp3 timeStamp', { sort: { 'timeStamp' : -1 }, limit: 10080 }, function (err, temperatures) {
+        console.log(temperatures);
+        res.send();
+    });
+})
+
 app.post('/', function (req, res) {
     var date = new Date();
     const tempReading = new TemperatureReading({
