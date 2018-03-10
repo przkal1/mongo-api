@@ -31,10 +31,10 @@ app.get('/', function (req, res) {
 })
 
 app.get('/historical', function (req, res) {
-    TemperatureReading.find({ }, 'temp1 temp2 temp3 timeStamp', { sort: { 'timeStamp' : -1 }, limit: 10080 }, function (err, temperatures) {
+    TemperatureReading.find({ }, 'temp1 temp2 temp3 timeStamp', { sort: { 'timeStamp' : -1 }, limit: 2 }, function (err, temperatures) {
 
         var result = [];
-        console.log(temperatures.count);
+        console.log(temperatures);
         for(var i = 0; i < temperatures.count; ++i){
 
             if(i % 10 === 0) {
