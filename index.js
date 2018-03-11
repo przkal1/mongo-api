@@ -50,7 +50,7 @@ app.get('/historical', function (req, res) {
                     temp1: temperatures[i].temp1,
                     temp2: temperatures[i].temp2,
                     temp3: temperatures[i].temp3,
-                    timeStamp: temperatures[i].timeStamp
+                    timeStamp: temperatures[i].timeStamp.toUTCString()
                 });
             }
         }
