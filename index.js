@@ -44,6 +44,8 @@ app.get('/historical', function (req, res) {
                 });
             }
         }
+
+        res.setHeader('Access-Control-Allow-Origin', '*');
         res.send(result);
     });
 })
