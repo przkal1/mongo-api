@@ -31,17 +31,21 @@ app.get('/', function (req, res) {
 })
 
 app.get('/historical', function (req, res) {
-    if(!req.query.limit){
-        req.query.limit = 5760;
+    var limit = 5760;
+    var step = 60;
+
+    if(req.query.limit){
+        limit = parseInt(req.query.limit)
     }
-    if(!req.query.step){
-        req.query.step = 60;
+    if(req.query.step){
+        step = parseInt(req.query.step)
     }
-    TemperatureReading.find({ }, 'temp1 temp2 temp3 timeStamp', { sort: { 'timeStamp' : -1 }, limit: req.query.limit }, function (err, temperatures) {
+
+    TemperatureReading.find({ }, 'temp1 temp2 temp3 timeStamp', { sort: { 'timeStamp' : -1 }, limit: limit }, function (err, temperatures) {
 
         var result = [];
         for(var i = 0; i < temperatures.length; ++i){
-            if(i % req.query.step === 0) {
+            if(i % step === 0) {
                 result.push({
                     temp1: temperatures[i].temp1,
                     temp2: temperatures[i].temp2,
