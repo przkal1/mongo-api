@@ -31,12 +31,17 @@ app.get('/', function (req, res) {
 })
 
 app.get('/historical', function (req, res) {
-    console.log(req.query);
-    TemperatureReading.find({ }, 'temp1 temp2 temp3 timeStamp', { sort: { 'timeStamp' : -1 }, limit: 5760 }, function (err, temperatures) {
+    if(!req.query.limit){
+        req.query.limit = 5760;
+    }
+    if(!req.query.step){
+        req.query.step = 60;
+    }
+    TemperatureReading.find({ }, 'temp1 temp2 temp3 timeStamp', { sort: { 'timeStamp' : -1 }, limit: req.query.limit }, function (err, temperatures) {
 
         var result = [];
         for(var i = 0; i < temperatures.length; ++i){
-            if(i % 60 === 0) {
+            if(i % req.query.step === 0) {
                 result.push({
                     temp1: temperatures[i].temp1,
                     temp2: temperatures[i].temp2,
