@@ -65,7 +65,7 @@ app.get('/historical', function (req, res) {
 
 app.get('/test', function (req, res) {
 
-    TemperatureReading.find({ }, 'temp1 temp2 temp3 timeStamp', { sort: { 'timeStamp' : -1 }, limit: limit }, function (err, temperatures) {
+    TemperatureReading.find({ }, 'temp1 temp2 temp3 timeStamp', { sort: { 'timeStamp' : -1 }, limit: 5760 }, function (err, temperatures) {
         grouped = _.groupBy(temperatures, function(temperature) { return new moment(temperature.timeStamp).format('YYYY MM DD HH'); });
 
         console.log(grouped);
