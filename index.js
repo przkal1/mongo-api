@@ -44,9 +44,18 @@ app.get('/historical', function (req, res) {
     }
 
     TemperatureReading.find({ }, 'temp1 temp2 temp3 timeStamp', { sort: { 'timeStamp' : -1 }, limit: limit }, function (err, temperatures) {
-        //grouped = _.groupBy(temperatures, function(temperature) { return new moment(temperature.timeStamp); });
-
+        var groupedData = _.groupBy(temperatures, function(temperature) { return new moment(temperature.timeStamp).format('YYYY MM DD HH'); });
         var result = [];
+
+        // for (var date in groupedData) {
+        //     result.push({
+        //         temp1: _.meanBy(groupedData[date], (temp) => temp.temp1);
+        //         temp2: _.meanBy(groupedData[date], (temp) => temp.temp2);
+        //         temp3: _.meanBy(groupedData[date], (temp) => temp.temp3);
+        //         timeStamp: date
+        //     });
+        // }
+
         for(var i = 0; i < temperatures.length; ++i){
             if(i % step === 0) {
                 result.push({
@@ -66,12 +75,22 @@ app.get('/historical', function (req, res) {
 app.get('/test', function (req, res) {
 
     TemperatureReading.find({ }, 'temp1 temp2 temp3 timeStamp', { sort: { 'timeStamp' : -1 }, limit: 5760 }, function (err, temperatures) {
-        grouped = _.groupBy(temperatures, function(temperature) { return new moment(temperature.timeStamp).format('YYYY MM DD HH'); });
+        var groupedData = _.groupBy(temperatures, function(temperature) { return new moment(temperature.timeStamp).format('YYYY MM DD HH'); });
+        var result = [];
 
-        console.log(grouped);
+        for (var date in groupedData) {
+            result.push({
+                temp1: _.meanBy(groupedData[date], (temp) => temp.temp1);
+                temp2: _.meanBy(groupedData[date], (temp) => temp.temp2);
+                temp3: _.meanBy(groupedData[date], (temp) => temp.temp3);
+                timeStamp: date
+            });
+        }
+
+        console.log(result);
 
         res.setHeader('Access-Control-Allow-Origin', '*');
-        res.send(grouped);
+        res.send(result);
     });
 })
 
