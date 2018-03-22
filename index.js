@@ -44,7 +44,7 @@ app.get('/historical', function (req, res) {
     }
 
     TemperatureReading.find({ }, 'temp1 temp2 temp3 timeStamp', { sort: { 'timeStamp' : -1 }, limit: limit }, function (err, temperatures) {
-        var groupedData = _.groupBy(temperatures, function(temperature) { return new moment(temperature.timeStamp).format('YYYY-MM-DD HH'); });
+        var groupedData = _.groupBy(temperatures, function(temperature) { return new moment.utc(temperature.timeStamp).format('YYYY-MM-DD HH'); });
         var result = [];
 
         for (var date in groupedData) {
@@ -64,10 +64,7 @@ app.get('/historical', function (req, res) {
 app.get('/test', function (req, res) {
 
     TemperatureReading.find({ }, 'temp1 temp2 temp3 timeStamp', { sort: { 'timeStamp' : -1 }, limit: 60 }, function (err, temperatures) {
-
-        console.log(temperatures);
         var groupedData = _.groupBy(temperatures, function(temperature) { return new moment.utc(temperature.timeStamp).format('YYYY-MM-DD HH'); });
-        console.log(groupedData);
 
         var result = [];
 
