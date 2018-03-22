@@ -47,25 +47,25 @@ app.get('/historical', function (req, res) {
         var groupedData = _.groupBy(temperatures, function(temperature) { return new moment(temperature.timeStamp).format('YYYY-MM-DD HH'); });
         var result = [];
 
-        // for (var date in groupedData) {
-        //     result.push({
-        //         temp1: _.meanBy(groupedData[date], (temp) => temp.temp1),
-        //         temp2: _.meanBy(groupedData[date], (temp) => temp.temp2),
-        //         temp3: _.meanBy(groupedData[date], (temp) => temp.temp3),
-        //         timeStamp: date
-        //     });
-        // }
-
-        for(var i = 0; i < temperatures.length; ++i){
-            if(i % step === 0) {
-                result.push({
-                    temp1: temperatures[i].temp1,
-                    temp2: temperatures[i].temp2,
-                    temp3: temperatures[i].temp3,
-                    timeStamp: temperatures[i].timeStamp.toUTCString()
-                });
-            }
+        for (var date in groupedData) {
+            result.push({
+                temp1: _.meanBy(groupedData[date], (temp) => temp.temp1),
+                temp2: _.meanBy(groupedData[date], (temp) => temp.temp2),
+                temp3: _.meanBy(groupedData[date], (temp) => temp.temp3),
+                timeStamp: moment.utc(date)
+            });
         }
+
+        // for(var i = 0; i < temperatures.length; ++i){
+        //     if(i % step === 0) {
+        //         result.push({
+        //             temp1: temperatures[i].temp1,
+        //             temp2: temperatures[i].temp2,
+        //             temp3: temperatures[i].temp3,
+        //             timeStamp: temperatures[i].timeStamp.toUTCString()
+        //         });
+        //     }
+        // }
 
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.send(result);
