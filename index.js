@@ -83,7 +83,7 @@ app.get('/test', function (req, res) {
                 temp1: _.meanBy(groupedData[date], (temp) => temp.temp1),
                 temp2: _.meanBy(groupedData[date], (temp) => temp.temp2),
                 temp3: _.meanBy(groupedData[date], (temp) => temp.temp3),
-                timeStamp: date
+                timeStamp: moment.utc(date)
             });
         }
 
