@@ -56,17 +56,6 @@ app.get('/historical', function (req, res) {
             });
         }
 
-        // for(var i = 0; i < temperatures.length; ++i){
-        //     if(i % step === 0) {
-        //         result.push({
-        //             temp1: temperatures[i].temp1,
-        //             temp2: temperatures[i].temp2,
-        //             temp3: temperatures[i].temp3,
-        //             timeStamp: temperatures[i].timeStamp.toUTCString()
-        //         });
-        //     }
-        // }
-
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.send(result);
     });
@@ -74,8 +63,10 @@ app.get('/historical', function (req, res) {
 
 app.get('/test', function (req, res) {
 
-    TemperatureReading.find({ }, 'temp1 temp2 temp3 timeStamp', { sort: { 'timeStamp' : -1 }, limit: 5760 }, function (err, temperatures) {
+    TemperatureReading.find({ }, 'temp1 temp2 temp3 timeStamp', { sort: { 'timeStamp' : -1 }, limit: 100 }, function (err, temperatures) {
         var groupedData = _.groupBy(temperatures, function(temperature) { return new moment(temperature.timeStamp).format('YYYY-MM-DD HH'); });
+        return(groupedData);
+
         var result = [];
 
         for (var date in groupedData) {
@@ -86,8 +77,6 @@ app.get('/test', function (req, res) {
                 timeStamp: moment.utc(date)
             });
         }
-
-        console.log(result);
 
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.send(result);
