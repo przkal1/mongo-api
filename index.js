@@ -49,9 +49,9 @@ app.get('/historical', function (req, res) {
 
         // for (var date in groupedData) {
         //     result.push({
-        //         temp1: _.meanBy(groupedData[date], (temp) => temp.temp1);
-        //         temp2: _.meanBy(groupedData[date], (temp) => temp.temp2);
-        //         temp3: _.meanBy(groupedData[date], (temp) => temp.temp3);
+        //         temp1: _.meanBy(groupedData[date], (temp) => temp.temp1),
+        //         temp2: _.meanBy(groupedData[date], (temp) => temp.temp2),
+        //         temp3: _.meanBy(groupedData[date], (temp) => temp.temp3),
         //         timeStamp: date
         //     });
         // }
@@ -80,9 +80,9 @@ app.get('/test', function (req, res) {
 
         for (var date in groupedData) {
             result.push({
-                temp1: _.meanBy(groupedData[date], (temp) => temp.temp1);
-                temp2: _.meanBy(groupedData[date], (temp) => temp.temp2);
-                temp3: _.meanBy(groupedData[date], (temp) => temp.temp3);
+                temp1: _.meanBy(groupedData[date], (temp) => temp.temp1),
+                temp2: _.meanBy(groupedData[date], (temp) => temp.temp2),
+                temp3: _.meanBy(groupedData[date], (temp) => temp.temp3),
                 timeStamp: date
             });
         }
