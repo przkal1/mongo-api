@@ -1,5 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose');
+const _ = require('lodash');
+const moment = require('moment');
 
 mongoose.connect('mongodb://localhost/home');
 const TemperatureReading = mongoose.model('TemperatureReading', { temp1: Number, temp2: Number, temp3: Number, timeStamp: Date });
@@ -42,6 +44,7 @@ app.get('/historical', function (req, res) {
     }
 
     TemperatureReading.find({ }, 'temp1 temp2 temp3 timeStamp', { sort: { 'timeStamp' : -1 }, limit: limit }, function (err, temperatures) {
+        //grouped = _.groupBy(temperatures, function(temperature) { return new moment(temperature.timeStamp); });
 
         var result = [];
         for(var i = 0; i < temperatures.length; ++i){
@@ -59,6 +62,19 @@ app.get('/historical', function (req, res) {
         res.send(result);
     });
 })
+
+app.get('/test', function (req, res) {
+
+    TemperatureReading.find({ }, 'temp1 temp2 temp3 timeStamp', { sort: { 'timeStamp' : -1 }, limit: limit }, function (err, temperatures) {
+        grouped = _.groupBy(temperatures, function(temperature) { return new moment(temperature.timeStamp).format('YYYY MM DD HH'); });
+
+        console.log(grouped);
+
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.send(grouped);
+    });
+})
+
 
 app.post('/', function (req, res) {
     var date = new Date();
