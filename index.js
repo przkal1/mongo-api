@@ -22,13 +22,16 @@ app.get('/', function (req, res) {
 
         res.setHeader('Access-Control-Allow-Origin', '*');
 
-        res.send({
-            temp1: temperature.temp1,
-            temp2: temperature.temp2,
-            temp3: temperature.temp3,
-            timeStamp: temperature.timeStamp,
-            timeDiff: lastUpdateDiff
-        });
+        TemperatureReading.count({}, function(err, count){
+            res.send({
+                temp1: temperature.temp1,
+                temp2: temperature.temp2,
+                temp3: temperature.temp3,
+                timeStamp: temperature.timeStamp,
+                timeDiff: lastUpdateDiff,
+                totalReadingCount: count
+            });
+        })
     });
 })
 
