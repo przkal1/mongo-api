@@ -63,7 +63,8 @@ app.get('/historical', function (req, res) {
 
 app.get('/test', function (req, res) {
     TemperatureReading.count({}, function(err, count){
-        res.send(count);
+        TemperatureReading.find({ }, '', { sort: { 'timeStamp' : 1 }, limit: 1 }).remove().exec();
+        res.send({"count": count});
     })
 })
 
@@ -80,7 +81,13 @@ app.post('/', function (req, res) {
         console.log('Saved reading: ' + tempReading.temp1 + ' ' + tempReading.temp2 + ' ' + tempReading.temp3 + ', '+ tempReading.timeStamp);
     });
 
+
+    // TemperatureReading.count({}, function(err, count){
+    //     if(count > 3000) {
+    //         TemperatureReading.find({ }, '', { sort: { 'timeStamp' : -1 }, limit: 1 }).remove().exec();
+    //     }
+    // })
     res.send();
-})/
+})
 
 app.listen(3000, () => console.log('Example app listening on port 3000!'))
