@@ -62,24 +62,9 @@ app.get('/historical', function (req, res) {
 })
 
 app.get('/test', function (req, res) {
-
-    TemperatureReading.find({ }, 'temp1 temp2 temp3 timeStamp', { sort: { 'timeStamp' : -1 }, limit: 60 }, function (err, temperatures) {
-        var groupedData = _.groupBy(temperatures, function(temperature) { return new moment.utc(temperature.timeStamp).format('YYYY-MM-DD HH'); });
-
-        var result = [];
-
-        for (var date in groupedData) {
-            result.push({
-                temp1: _.meanBy(groupedData[date], (temp) => temp.temp1),
-                temp2: _.meanBy(groupedData[date], (temp) => temp.temp2),
-                temp3: _.meanBy(groupedData[date], (temp) => temp.temp3),
-                timeStamp: moment.utc(date)
-            });
-        }
-
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        res.send(result);
-    });
+    TemperatureReading.count({}, function(err, count){
+        res.send(count);
+    })
 })
 
 
