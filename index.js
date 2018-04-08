@@ -63,12 +63,11 @@ app.get('/historical', function (req, res) {
 
 app.get('/test', function (req, res) {
     TemperatureReading.count({}, function(err, count){
-
         TemperatureReading.findOne({ }, '_id timeStamp', { sort: { 'timeStamp' : 1 } }, function (err, temperature) {
-            res.send(temperature);
-        })
+            TemperatureReading.findOneAndRemove({ _id: temperature._id }).exec();
+        });
 
-        //res.send({"count": count});
+        res.send(200);
     })
 })
 
