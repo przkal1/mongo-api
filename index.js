@@ -62,13 +62,7 @@ app.get('/historical', function (req, res) {
 })
 
 app.get('/test', function (req, res) {
-    TemperatureReading.count({}, function(err, count){
-        TemperatureReading.findOne({ }, '_id timeStamp', { sort: { 'timeStamp' : 1 } }, function (err, temperature) {
-            TemperatureReading.findOneAndRemove({ _id: temperature._id }).exec();
-        });
-
-        res.send(200);
-    })
+    res.send(200);
 })
 
 
@@ -85,11 +79,13 @@ app.post('/', function (req, res) {
     });
 
 
-    // TemperatureReading.count({}, function(err, count){
-    //     if(count > 3000) {
-    //         TemperatureReading.find({ }, '', { sort: { 'timeStamp' : -1 }, limit: 1 }).remove().exec();
-    //     }
-    // })
+    TemperatureReading.count({}, function(err, count){
+        if(count > 3000) {
+            TemperatureReading.findOne({ }, '_id timeStamp', { sort: { 'timeStamp' : 1 } }, function (err, temperature) {
+                TemperatureReading.findOneAndRemove({ _id: temperature._id }).exec();
+            });
+        }
+    })
     res.send();
 })
 
