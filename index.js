@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const _ = require('lodash');
 const moment = require('moment');
 
-mongoose.connect(' mongodb://127.0.0.1:27017/home?directConnection=true');
+mongoose.connect('mongodb://127.0.0.1:27017/home?directConnection=true');
 const TemperatureReading = mongoose.model('TemperatureReading', { temp1: Number, temp2: Number, temp3: Number, timeStamp: Date });
 
 
